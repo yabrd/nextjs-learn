@@ -1,4 +1,4 @@
-import RegisterView from "@/component/views/auth/register"
+import RegisterView from "@/component/views/auth/Register"
 
 const RegisterPage = () => {
     return (

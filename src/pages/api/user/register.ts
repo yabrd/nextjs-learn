@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { signUp } from "../../../lib/firebase/services";
+import { signUp } from "@/services/auth";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === "POST") {
-        await signUp(req.body, (success) => {
+        await signUp(req.body, (success: boolean) => {
             if (success) {
                 res.status(200).json({ success: true, message: "Success" });
             } else {

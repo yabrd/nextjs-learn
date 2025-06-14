@@ -1,6 +1,8 @@
 import { FormEvent } from "react";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import Input from "@/component/ui/Input";
+import Button from "@/component/ui/Button";
 
 const RegisterView = () => {
     const [ isLoading, setIsLoading ] = useState(false);
@@ -43,38 +45,13 @@ const RegisterView = () => {
                 <h1 className="text-2xl font-bold mb-6 text-center text-gray-700">Register</h1>
                 {error && <p className="text-red-500 mb-4">{error}</p>}
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    {/* Full Name */}
-                    <div>
-                        <label htmlFor="fullname"className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                        <input type="text" id="fullname" className="w-full bg-white text-gray-900 border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
-                    </div>
-
-                    {/* Email */}
-                    <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                        <input type="email" id="email" className="w-full bg-white text-gray-900 border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
-                    </div>
-
-                    {/* Phone */}
-                    <div>
-                        <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                        <input type="text" id="phone" className="w-full bg-white text-gray-900 border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
-                    </div>
-
-                    {/* Password */}
-                    <div>
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                        <input type="password" id="password" className="w-full bg-white text-gray-900 border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
-                    </div>
-
-                    {/* Submit */}
-                    <button type="submit" className="w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-700 transition">
-                        {isLoading ? "..." : "Register"}
-                    </button>
+                    <Input label="Full Name" id="fullname" name="fullname" type="fullname" placeholder="Enter your full name" />
+                    <Input label="Email" id="email" name="email" type="email" placeholder="Enter your email" />
+                    <Input label="Phone Number" id="phone" name="phone" type="phone" placeholder="Enter your phone number" />
+                    <Input label="Password" id="password" name="password" type="password" placeholder="Enter your password" />
+                    <Button type="submit" OnClick={() => {}}>{isLoading ? "..." : "Register"}</Button>
                 </form>
-
-                {/* Link to Login */}
-                <p className="mt-4 text-sm text-center text-gray-600">Already have an account?{" "}
+                <p className="mt-2 text-sm text-center text-gray-600">Already have an account?{" "}
                     <a href="/auth/login" className="text-blue-600 hover:underline">Login</a>
                 </p>
             </div>

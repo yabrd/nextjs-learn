@@ -9,7 +9,6 @@ import {
     addDoc,
 } from "@firebase/firestore";
 import app from "./init";
-import bcrypt from "bcryptjs";
 
 const firestore = getFirestore(app);
 const retrieveData = async (collectionName: string) => {
@@ -27,56 +26,35 @@ const retrieveDataById = async (collectionName: string, id: string) => {
     return data;
 };
 
-const signUp = async (
-    userData: {
-        fullname: string;
-        email: string;
-        phone: string;
-        password: string;
-        role?: string;
-    },
-    callback: ({
-        success,
-        message,
-    }: {
-        success: boolean;
-        message: string;
-    }) => void
+const retrieveDataByField = async (
+    collectionName: string,
+    field: string,
+    value: string
 ) => {
     const q = query(
-        collection(firestore, "users"),
-        where("email", "==", userData.email)
+        collection(firestore, collectionName),
+        where(field, "==", value)
     );
     const snapshot = await getDocs(q);
     const data = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
     }));
-
-    if (data.length > 0) {
-        callback({
-            success: false,
-            message: "User already exists",
-        });
-    } else {
-        if (!userData.role) {
-            userData.role = "member";
-        }
-        userData.password = await bcrypt.hash(userData.password, 10);
-        await addDoc(collection(firestore, "users"), userData)
-            .then(() => {
-                callback({
-                    success: true,
-                    message: "User created successfully",
-                });
-            })
-            .catch((error) => {
-                callback({
-                    success: false,
-                    message: error.message,
-                });
-            });
-    }
+    return data; // <-- penting!
 };
 
-export { retrieveData, retrieveDataById, signUp };
+const addData = async (
+    collectionName: string,
+    data: any,
+    callback: Function
+) => {
+    await addDoc(collection(firestore, collectionName), data)
+        .then(() => {
+            callback(true);
+        })
+        .catch((error) => {
+            callback(false);
+        });
+};
+
+export { retrieveData, retrieveDataById, addData, retrieveDataByField };
