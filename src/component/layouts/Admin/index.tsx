@@ -12,12 +12,12 @@ const listSidbarItems = [
     },
     {
         name: 'Users',
-        url: '/admin/users',
+        url: '/admin',
         icon: 'bx-user'
     },
     {
-        name: 'Posts',
-        url: '/admin/posts',
+        name: 'Products',
+        url: '/admin/products',
         icon: 'bx-box'
     }
 ]
