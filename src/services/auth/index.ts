@@ -1,3 +1,4 @@
+import instance from "@/lib/axios/instance";
 import { addData, retrieveDataByField } from "@/lib/firebase/services";
 import bcrypt from "bcryptjs";
 
@@ -66,4 +67,8 @@ const signInWithGoogle = async (
     }
 };
 
-export { signUp, signIn, signInWithGoogle };
+const authServices = {
+    registerAccount: (data: any) => instance.post("/api/user/register", data),
+};
+
+export { signUp, signIn, signInWithGoogle, authServices };

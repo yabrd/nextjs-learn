@@ -1,8 +1,10 @@
 import { FormEvent } from "react";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { authServices } from "@/services/auth";
 import Input from "@/component/ui/Input";
 import Button from "@/component/ui/Button";
+import AuthLayout from "@/component/layouts/Auth";
 
 const RegisterView = () => {
     const [ isLoading, setIsLoading ] = useState(false);
@@ -21,13 +23,7 @@ const RegisterView = () => {
             password: form.password.value,
         };
 
-        const result = await fetch("/api/user/register", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        });
+        const result = await authServices.registerAccount(data);
 
         if (result.status === 200) {
             form.reset();
@@ -40,10 +36,7 @@ const RegisterView = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-            <div className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md">
-                <h1 className="text-2xl font-bold mb-6 text-center text-gray-700">Register</h1>
-                {error && <p className="text-red-500 mb-4">{error}</p>}
+        <AuthLayout title="Register" link="/auth/login" linkText="Already have an account? " error={error}>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <Input label="Full Name" id="fullname" name="fullname" type="fullname" placeholder="Enter your full name" />
                     <Input label="Email" id="email" name="email" type="email" placeholder="Enter your email" />
@@ -51,11 +44,7 @@ const RegisterView = () => {
                     <Input label="Password" id="password" name="password" type="password" placeholder="Enter your password" />
                     <Button type="submit" OnClick={() => {}}>{isLoading ? "..." : "Register"}</Button>
                 </form>
-                <p className="mt-2 text-sm text-center text-gray-600">Already have an account?{" "}
-                    <a href="/auth/login" className="text-blue-600 hover:underline">Login</a>
-                </p>
-            </div>
-        </div>
+        </AuthLayout>
     );
 };
 
